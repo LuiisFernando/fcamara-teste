@@ -1,0 +1,24 @@
+{
+    "rotas": [
+        {
+            "nome": "dashboard",
+            "caminho": "/"
+        },
+        {
+            "nome": "cadastrar",
+            "caminho": "cadastrar"
+        }
+    ],
+    "mensagens": [
+        {
+            "id": 1,
+            "titulo": "titulo mensagem 1",
+            "mensagem": "O arnaldo robou pão na casa do joão"
+        },
+        {
+            "id": 2,
+            "titulo": "titulo mensagem 2",
+            "mensagem": "zé de brito jr"
+        }
+    ]
+}
