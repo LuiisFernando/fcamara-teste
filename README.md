@@ -6,7 +6,7 @@ To run follow the steps bellow.
 
 1- install the dependencies
 
-if you're yarn 
+if you're using yarn 
 ```
 yarn 
 ```
