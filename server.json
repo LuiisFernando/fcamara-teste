@@ -6,7 +6,7 @@
         },
         {
             "nome": "cadastrar",
-            "caminho": "cadastrar"
+            "caminho": "/cadastrar"
         }
     ],
     "mensagens": [
