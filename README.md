@@ -16,7 +16,13 @@ or npm
 npm install
 ```
 
-2- run the project
+2- run the server with json server.
+
+```
+yarn json-server server.json -w -p 3333
+```
+
+3- run the project
 ```
 yarn start
 ```
