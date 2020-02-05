@@ -18,13 +18,12 @@ export default createGlobalStyle`
   body {
     overflow: auto;
     -webkit-font-smoothing: antialiased !important;
-    background: #eee;
+    
   }
 
   #app {
     margin: 0 90px;
     padding: 60px 0;
-
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -34,5 +33,7 @@ export default createGlobalStyle`
         font: 14px Roboto, sans-serif;
     }
 
-
+    button {
+    cursor: pointer;
+  }
 `;

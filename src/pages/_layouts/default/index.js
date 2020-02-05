@@ -31,7 +31,7 @@ export default function DefaultLayout({ children }) {
                     <Toolbar>
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         </IconButton>
-                        <Typography variant="h4" className={classes.title}>
+                        <Typography variant="h4" className={classes.title} href="/">
                             Menu
                         </Typography>
                         <Link color="inherit" href="/cadastrar">
