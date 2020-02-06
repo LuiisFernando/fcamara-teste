@@ -6,12 +6,24 @@ export const Aside = styled.aside`
     background: #FFF;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.02);
     padding: 0 20px;
-
+    
     ul {
         display: grid;
         list-style: none;
-        grid-template-columns: repeat(1, 1fr);
+        /* grid-template-columns: repeat(1, 1fr); */
         gap: 20px;
+    }
+
+    @media (max-width: 414px) {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+
+        ul {
+            width: 195px;
+            margin: 0;
+        }
     }
 
     li {
@@ -33,7 +45,7 @@ export const MessageInfo = styled.div `
     background: ${props => (props.selecionado ? 'rgba(209, 209, 209, 0.9)': 'white')};
 
     h1 {
-            color: #999;
+        color: #999;
     }
 
     h5 {
@@ -70,11 +82,6 @@ export const MessageTitle = styled.h1`
     color: #999;
 `;
 
-export const MessageSubject = styled.h2`
-    padding: 0 35px 10px;
-    font-size: 21px;
-    color: #999;
-`;
 
 export const MessageTime = styled.h3`
     padding: 0 35px 40px;
@@ -113,4 +120,9 @@ export const ButtonContainer = styled.div`
 
 export const MainContainer = styled.div`
     width: 100%;
+
+    @media (max-width: 414px) {
+        width: 90%;
+        align-self: center;
+    }
 `;

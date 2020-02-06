@@ -8,7 +8,6 @@ import {
     Message,
     MessageTitle,
     MessageContent,
-    MessageSubject,
     MessageTime,
     ButtonContainer,
     MainContainer
@@ -36,6 +35,12 @@ export default function Dashboard() {
         }
     }
 
+    async function handleDelete() {
+        await api.delete(`mensagens/${selectedMessage.id}`);
+
+        await loadMensagens();
+    }
+
     return (
         <div id="app">
             <Aside>
@@ -45,7 +50,7 @@ export default function Dashboard() {
                             key={index} className="mensagem-box"
                             onClick={() => setSelectedMessage(message)}
                         >
-                            <MessageInfo className="mensagem-info" selecionado={handleSelecionado(message)}>
+                            <MessageInfo selecionado={handleSelecionado(message)}>
                                 <h1>{message.assunto}</h1>
                                 <h5>{message.data}</h5>
                             </MessageInfo>
@@ -71,7 +76,7 @@ export default function Dashboard() {
                     )}
                 </Message>
                 <ButtonContainer>
-                    <button>EXCLUIR MENSAGEM</button>
+                    <button onClick={handleDelete}>EXCLUIR MENSAGEM</button>
                 </ButtonContainer>
             </MainContainer>
         </div>

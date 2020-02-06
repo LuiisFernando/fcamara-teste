@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import "react-toastify/dist/ReactToastify.css";
+
 export default createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
@@ -28,6 +30,15 @@ export default createGlobalStyle`
     flex-direction: row;
     align-items: flex-start;
   }
+
+
+  @media (max-width: 412px) {
+    #app {
+      flex-direction: column;
+      margin: 0;
+    }
+  }
+
 
   body, input, button {
         font: 14px Roboto, sans-serif;
