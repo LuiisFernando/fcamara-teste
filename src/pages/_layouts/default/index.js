@@ -34,6 +34,9 @@ export default function DefaultLayout({ children }) {
                         <Typography variant="h4" className={classes.title} href="/">
                             Menu
                         </Typography>
+                        <Link color="inherit" href="/">
+                            MAIN
+                        </Link>
                         <Link color="inherit" href="/cadastrar">
                             ADD
                         </Link>

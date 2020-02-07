@@ -47,4 +47,10 @@ export default createGlobalStyle`
     button {
     cursor: pointer;
   }
+
+  .hasError {
+        border-bottom-color: red !important;
+        color: red;
+        font-size: 11px;
+    }
 `;

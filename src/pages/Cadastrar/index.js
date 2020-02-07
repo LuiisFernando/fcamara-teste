@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+
 import { toast } from "react-toastify";
 import { format } from 'date-fns'
-import * as Yup from "yup";
+
+import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+
 
 import api from '../../services/api';
 
@@ -12,11 +17,33 @@ import {
 
 export default function Cadastrar() {
     const [id, setID] = useState(0);
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [assunto, setAssunto] = useState('');
-    const [mensagem, setMensagem] = useState('');
+    const [assuntos, setAssuntos] = useState([]);
+
+    const initialValues = {
+        nome: '',
+        email: '',
+        telefone: '',
+        assunto: '',
+        mensagem: ''
+    }
+
+    const schema = Yup.object().shape({
+        nome: Yup.string()
+            .trim()
+            .matches(/^[a-z]+$/)
+            .required('Nome é um campo obrigatório.'),
+        email: Yup.string()
+            .email()
+            .required('E-mail é um campo obrigatório.'),
+        telefone: Yup.number()
+            .required(),
+        assunto: Yup.number()
+            .required(),
+        mensagem: Yup.string()
+            .min(1, "Digite algo na mensagem")
+            .max(500, "Maximo de 500 caracteres apenas")
+            .required()
+    });
 
     async function proximoID() {
         const response = await api.get('/mensagens');
@@ -26,12 +53,24 @@ export default function Cadastrar() {
         setID(ultimaMensagem.id + 1);
     }
 
+    async function carregarAssuntos() {
+        const response = await api.get('/assuntos');
+
+        setAssuntos(response.data);
+    }
+
     useEffect(() => {
         proximoID();
+        carregarAssuntos();
     }, [])
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+    async function handleSubmit({
+        nome,
+        email,
+        telefone,
+        assunto,
+        mensagem
+    }) {
         
         await api.post('/mensagens', {
             id,
@@ -44,11 +83,6 @@ export default function Cadastrar() {
         });
 
         proximoID();
-        setNome('');
-        setEmail('');
-        setTelefone('');
-        setAssunto('');
-        setMensagem('');
 
         toast.success("Mensagem adicionada!");
     }
@@ -56,41 +90,114 @@ export default function Cadastrar() {
     return (
         <Container>
             <div>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        placeholder="Nome"
-                        value={nome}
-                        onChange={e => setNome(e.target.value)} 
-                    />
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={schema}
+                    onSubmit={handleSubmit}
+                >
+                    {() => (
+                        <Form>
+                            <FormControl>
+                                <Field
+                                    className="input-teste"
+                                    name="nome"
+                                    placeholder="Nome"
+                                />
+                                <ErrorMessage
+                                    name="nome"
+                                    className="hasError"
+                                    component="div"
+                                />
+                            </FormControl>
+                            
+                            <FormControl>
+                                <Field
+                                    className="input-teste"
+                                    name="email"
+                                    placeholder="E-mail"
+                                />
+                                <ErrorMessage
+                                    name="email"
+                                    className="hasError"
+                                    component="div"
+                                />
+                            </FormControl>
 
-                    <input
-                        placeholder="E-mail"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
+                            <FormControl>
+                                <Field
+                                    className="input-teste"
+                                    name="telefone"
+                                    placeholder="Telefone"
+                                />
+                                <ErrorMessage
+                                    name="telefone"
+                                    className="hasError"
+                                    component="div"
+                                />
+                            </FormControl>
 
-                    <input
-                        placeholder="Telefone"
-                        value={telefone}
-                        onChange={e => setTelefone(e.target.value)}
-                    />
+                            <FormControl>
+                                <Field
+                                    className="input-teste"
+                                    name="assunto"
+                                    placeholder="Assunto"
+                                    render={({ field, form }) => (
+                                        <>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            {...field}
+                                            placeholder="Assunto"
+                                            
+                                            onChange={e => {
+                                                debugger;
+                                                if (e) {
+                                                    form.setFieldValue('assunto', e.target.value);
+                                                } else {
+                                                    form.setFieldValue('assunto', "");
+                                                    field.value = "";
+                                                }
+                                                }}
+                                        >
+                                            {assuntos && assuntos.map(assunto => (
+                                                <MenuItem 
+                                                    key={assunto.id}
+                                                    value={assunto.id}
+                                                >
+                                                    {assunto.descricao}
+                                                </MenuItem>))}
+                                        </Select>
+                                        </>
+                                    )}
+                                />
+                                <ErrorMessage
+                                    name="assunto"
+                                    className="hasError"
+                                    component="div"
+                                />
+                            </FormControl>
 
-                    <input
-                        placeholder="Assunto"
-                        value={assunto}
-                        onChange={e => setAssunto(e.target.value)}
-                    />
 
-                    <textarea
-                        placeholder="Mensagem"
-                        value={mensagem}
-                        onChange={e => setMensagem(e.target.value)}
-                    />
+                            <FormControl>
+                                <Field
+                                    className="input-teste"
+                                    name="mensagem"
+                                    placeholder="Mensagem"
+                                />
+                                <ErrorMessage
+                                    name="mensagem"
+                                    className="hasError"
+                                    component="div"
+                                />
+                            </FormControl>
 
-                    <ButtonContainer>
-                        <button>Enviar</button>
-                    </ButtonContainer>
-                </form>
+                            <ButtonContainer>
+                                <button type="submit">Enviar</button>
+                            </ButtonContainer>
+                        </Form>
+                    )}
+                    
+                </Formik>
             </div>
         </Container>
     );

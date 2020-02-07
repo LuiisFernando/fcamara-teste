@@ -16,15 +16,22 @@ export const Container = styled.div`
 
     input {
     /* background: rgba(0, 0, 0, 0.1); */
+    /* border: 1px solid #eee;
+    border-radius: 4px;
+    height: 44px;
+    padding: 0 15px;
+    margin: 10px 0; */
+    &::placeholder {
+      /* color: rgba(255, 255, 255, 0.7); */
+    }
+  }
+
+  .input-teste {
     border: 1px solid #eee;
     border-radius: 4px;
     height: 44px;
     padding: 0 15px;
-    margin: 0 0 10px;
-
-    &::placeholder {
-      /* color: rgba(255, 255, 255, 0.7); */
-    }
+    margin-top: 15px;
   }
 
   textarea {
@@ -33,6 +40,10 @@ export const Container = styled.div`
     height: 100px;
     padding: 0 15px;
     margin: 0 0 10px;
+  }
+
+  .MuiFormControl-root {
+      height: 84px;
   }
 
 `;

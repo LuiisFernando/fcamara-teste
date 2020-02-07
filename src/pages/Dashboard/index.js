@@ -39,6 +39,7 @@ export default function Dashboard() {
         await api.delete(`mensagens/${selectedMessage.id}`);
 
         await loadMensagens();
+        setSelectedMessage(null);
     }
 
     return (
