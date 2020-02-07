@@ -34,12 +34,6 @@ export default function Dashboard() {
         setMessages(mensagens);
     }
 
-    async function loadAssuntos() {
-        const responseAssunto = await api.get('/assuntos');
-
-        setAssuntos(responseAssunto.data);
-    }
-
     useEffect(() => {
         loadMensagens();
     }, []);
