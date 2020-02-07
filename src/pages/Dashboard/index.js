@@ -16,11 +16,28 @@ import {
 export default function Dashboard() {
     const [messages, setMessages] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState(null);
+    const [assuntos, setAssuntos] = useState(null);
 
     async function loadMensagens() {
         const response = await api.get('/mensagens');
+        const responseAssunto = await api.get('/assuntos');
 
-        setMessages(response.data)
+        const mensagens = response.data.map(mensagem => {
+            return {
+                id: mensagem.id,
+                assunto: responseAssunto.data.find(x => x.id === mensagem.assunto).descricao,
+                mensagem: mensagem.mensagem,
+                data: mensagem.data
+            }
+        });
+
+        setMessages(mensagens);
+    }
+
+    async function loadAssuntos() {
+        const responseAssunto = await api.get('/assuntos');
+
+        setAssuntos(responseAssunto.data);
     }
 
     useEffect(() => {
@@ -46,7 +63,7 @@ export default function Dashboard() {
         <div id="app">
             <Aside>
                 <ul>
-                    {messages && messages.map((message, index) => (
+                    {(messages) && messages.map((message, index) => (
                         <li
                             key={index} className="mensagem-box"
                             onClick={() => setSelectedMessage(message)}

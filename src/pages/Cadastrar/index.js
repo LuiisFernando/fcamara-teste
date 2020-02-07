@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast } from "react-toastify";
 import { format } from 'date-fns'
 
-import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { Select, MenuItem, FormControl, TextField, TextareaAutosize } from '@material-ui/core';
 
 
 import api from '../../services/api';
@@ -30,10 +30,10 @@ export default function Cadastrar() {
     const schema = Yup.object().shape({
         nome: Yup.string()
             .trim()
-            .matches(/^[a-z]+$/)
+            .matches(/[a-zA-Z]+/, 'O campo nome deve conter apenas letras.')
             .required('Nome é um campo obrigatório.'),
         email: Yup.string()
-            .email()
+            .email('O campo deve ser um e-mail válido.')
             .required('E-mail é um campo obrigatório.'),
         telefone: Yup.number()
             .required(),
@@ -70,8 +70,7 @@ export default function Cadastrar() {
         telefone,
         assunto,
         mensagem
-    }) {
-        
+    }, { resetForm }) {
         await api.post('/mensagens', {
             id,
             nome,
@@ -81,6 +80,8 @@ export default function Cadastrar() {
             mensagem,
             data: format(new Date(), 'dd/MM/yyyy HH:MM')
         });
+
+        resetForm({});
 
         proximoID();
 
@@ -101,7 +102,9 @@ export default function Cadastrar() {
                                 <Field
                                     className="input-teste"
                                     name="nome"
-                                    placeholder="Nome"
+                                    children={({ field }) => (
+                                        <TextField  {...field} label="Nome" />
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="nome"
@@ -114,7 +117,9 @@ export default function Cadastrar() {
                                 <Field
                                     className="input-teste"
                                     name="email"
-                                    placeholder="E-mail"
+                                    children={({ field }) => (
+                                        <TextField  {...field} label="E-mail" />
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="email"
@@ -127,7 +132,9 @@ export default function Cadastrar() {
                                 <Field
                                     className="input-teste"
                                     name="telefone"
-                                    placeholder="Telefone"
+                                    children={({ field }) => (
+                                        <TextField  {...field} label="Telefone" />
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="telefone"
@@ -141,16 +148,13 @@ export default function Cadastrar() {
                                     className="input-teste"
                                     name="assunto"
                                     placeholder="Assunto"
-                                    render={({ field, form }) => (
-                                        <>
+                                    children={({ field, form }) => (
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
                                             {...field}
-                                            placeholder="Assunto"
-                                            
+                                            label="Assunto"
                                             onChange={e => {
-                                                debugger;
                                                 if (e) {
                                                     form.setFieldValue('assunto', e.target.value);
                                                 } else {
@@ -167,7 +171,6 @@ export default function Cadastrar() {
                                                     {assunto.descricao}
                                                 </MenuItem>))}
                                         </Select>
-                                        </>
                                     )}
                                 />
                                 <ErrorMessage
@@ -182,7 +185,9 @@ export default function Cadastrar() {
                                 <Field
                                     className="input-teste"
                                     name="mensagem"
-                                    placeholder="Mensagem"
+                                    children={({ field }) => (
+                                        <TextareaAutosize rowsMin={10}  {...field} label="Mensagem" />
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="mensagem"
