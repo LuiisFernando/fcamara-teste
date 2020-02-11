@@ -1,11 +1,13 @@
 {
   "rotas": [
     {
-      "nome": "dashboard",
+      "id": 1,
+      "nome": "Dashboard",
       "caminho": "/"
     },
     {
-      "nome": "cadastrar",
+      "id": 2,
+      "nome": "Cadastrar",
       "caminho": "/cadastrar"
     }
   ],
