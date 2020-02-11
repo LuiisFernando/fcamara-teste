@@ -26,7 +26,7 @@ export const Container = styled.div`
     }
   }
 
-  .input-teste {
+  .generic-input {
     border: 1px solid #eee;
     border-radius: 4px;
     height: 44px;
@@ -44,6 +44,17 @@ export const Container = styled.div`
 
   .MuiFormControl-root {
       height: 84px;
+  }
+
+  .contador {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    top: 0;
+  }
+
+  .areaText {
+    height: 120px;
   }
 
 `;
@@ -67,6 +78,10 @@ export const ButtonContainer = styled.div`
 
         &:hover {
             background: ${darken(0.03, "#00de2a")};
+        }
+        &:disabled {
+          background: #5aa969;
+          cursor: default;
         }
     }
 `;

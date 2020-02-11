@@ -16,7 +16,6 @@ import {
 export default function Dashboard() {
     const [messages, setMessages] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState(null);
-    const [assuntos, setAssuntos] = useState(null);
 
     async function loadMensagens() {
         const response = await api.get('/mensagens');

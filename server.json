@@ -90,24 +90,6 @@
       "assunto": 3,
       "mensagem": "sdfsdfsdfsdfsd",
       "data": "06/02/2020 23:02"
-    },
-    {
-      "id": 8,
-      "nome": "Marcelo Augusto David",
-      "email": "demo@mail.com",
-      "telefone": "23423423423",
-      "assunto": 4,
-      "mensagem": "dfsfdsfsdfsdfsfsdfsdfsdsf",
-      "data": "06/02/2020 23:02"
-    },
-    {
-      "id": 9,
-      "nome": "luis",
-      "email": "ana@mail.com",
-      "telefone": "23423423423",
-      "assunto": 3,
-      "mensagem": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essen",
-      "data": "07/02/2020 00:02"
     }
   ]
 }

@@ -36,13 +36,13 @@ export default function Cadastrar() {
             .email('O campo deve ser um e-mail válido.')
             .required('E-mail é um campo obrigatório.'),
         telefone: Yup.number()
-            .required(),
+            .required('Telefone é um campo obrigatório'),
         assunto: Yup.number()
-            .required(),
+            .required('Assunto é um campo obrigatório'),
         mensagem: Yup.string()
             .min(1, "Digite algo na mensagem")
             .max(500, "Maximo de 500 caracteres apenas")
-            .required()
+            .required('Mensagem é um campo obrigatório')
     });
 
     async function proximoID() {
@@ -96,11 +96,11 @@ export default function Cadastrar() {
                     validationSchema={schema}
                     onSubmit={handleSubmit}
                 >
-                    {() => (
+                    {({ values, isValid, dirty, errors }) => (
                         <Form>
                             <FormControl>
                                 <Field
-                                    className="input-teste"
+                                    className="generic-input"
                                     name="nome"
                                     children={({ field }) => (
                                         <TextField  {...field} label="Nome" />
@@ -115,7 +115,7 @@ export default function Cadastrar() {
                             
                             <FormControl>
                                 <Field
-                                    className="input-teste"
+                                    className="generic-input"
                                     name="email"
                                     children={({ field }) => (
                                         <TextField  {...field} label="E-mail" />
@@ -130,7 +130,7 @@ export default function Cadastrar() {
 
                             <FormControl>
                                 <Field
-                                    className="input-teste"
+                                    className="generic-input"
                                     name="telefone"
                                     children={({ field }) => (
                                         <TextField  {...field} label="Telefone" />
@@ -145,13 +145,11 @@ export default function Cadastrar() {
 
                             <FormControl>
                                 <Field
-                                    className="input-teste"
+                                    className="generic-input"
                                     name="assunto"
                                     placeholder="Assunto"
                                     children={({ field, form }) => (
                                         <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
                                             {...field}
                                             label="Assunto"
                                             onChange={e => {
@@ -183,10 +181,19 @@ export default function Cadastrar() {
 
                             <FormControl>
                                 <Field
-                                    className="input-teste"
+                                    className="generic-input areaText"
                                     name="mensagem"
                                     children={({ field }) => (
-                                        <TextareaAutosize rowsMin={10}  {...field} label="Mensagem" />
+                                        <>
+                                        {/* {console.log(isValid)}
+                                        {console.log(dirty)} */}
+                                        {console.log(errors)}
+                                            <TextareaAutosize rowsMin={10}  {...field} label="Mensagem" />
+                                            <label className="contador">{values.mensagem ?
+                                                values.mensagem.length + '/500'
+                                                : '0/200'
+                                            }</label>
+                                        </>
                                     )}
                                 />
                                 <ErrorMessage
@@ -197,7 +204,7 @@ export default function Cadastrar() {
                             </FormControl>
 
                             <ButtonContainer>
-                                <button type="submit">Enviar</button>
+                                <button type="submit" disabled={dirty && errors.length === 0}>Enviar</button>
                             </ButtonContainer>
                         </Form>
                     )}
