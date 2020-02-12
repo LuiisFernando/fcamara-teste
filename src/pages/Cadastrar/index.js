@@ -5,7 +5,16 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast } from "react-toastify";
 import { format } from 'date-fns'
 
-import { Select, MenuItem, FormControl, TextField, TextareaAutosize } from '@material-ui/core';
+import { 
+    Select,
+    MenuItem,
+    FormControl,
+    TextField,
+    TextareaAutosize,
+    InputLabel 
+} from '@material-ui/core';
+
+import InputMask from 'react-input-mask';
 
 
 import api from '../../services/api';
@@ -35,8 +44,9 @@ export default function Cadastrar() {
         email: Yup.string()
             .email('O campo deve ser um e-mail válido.')
             .required('E-mail é um campo obrigatório.'),
-        telefone: Yup.number()
-            .required('Telefone é um campo obrigatório'),
+        telefone: Yup.string()
+            .min(14, 'Digite um telefone válido')
+            .max(14, 'Digite um telefone válido'),
         assunto: Yup.number()
             .required('Assunto é um campo obrigatório'),
         mensagem: Yup.string()
@@ -46,11 +56,16 @@ export default function Cadastrar() {
     });
 
     async function proximoID() {
+        debugger;
         const response = await api.get('/mensagens');
 
-        const ultimaMensagem = response.data[response.data.length - 1];
-    
-        setID(ultimaMensagem.id + 1);
+        if (response.data && response.data.length > 0) {
+            const ultimaMensagem = response.data[response.data.length - 1];
+        
+            setID(ultimaMensagem.id + 1);
+        } else {
+            setID(1);
+        }
     }
 
     async function carregarAssuntos() {
@@ -96,7 +111,7 @@ export default function Cadastrar() {
                     validationSchema={schema}
                     onSubmit={handleSubmit}
                 >
-                    {({ values, isValid, dirty, errors }) => (
+                    {({ values, isValid, dirty, errors, isInitialValid }) => (
                         <Form>
                             <FormControl>
                                 <Field
@@ -131,9 +146,12 @@ export default function Cadastrar() {
                             <FormControl>
                                 <Field
                                     className="generic-input"
+                                    id="telefone"
                                     name="telefone"
                                     children={({ field }) => (
-                                        <TextField  {...field} label="Telefone" />
+                                        <InputMask {...field} maskChar={null} mask="(99) 9999-9999">
+                                            {() => <TextField id="telefone" name="telefone" label="Telefone" />}
+                                        </InputMask>
                                     )}
                                 />
                                 <ErrorMessage
@@ -144,14 +162,14 @@ export default function Cadastrar() {
                             </FormControl>
 
                             <FormControl>
+                                <InputLabel id="assunto">Assunto</InputLabel>
                                 <Field
                                     className="generic-input"
                                     name="assunto"
-                                    placeholder="Assunto"
                                     children={({ field, form }) => (
                                         <Select
                                             {...field}
-                                            label="Assunto"
+                                            labelId="assunto"
                                             onChange={e => {
                                                 if (e) {
                                                     form.setFieldValue('assunto', e.target.value);
@@ -185,9 +203,9 @@ export default function Cadastrar() {
                                     name="mensagem"
                                     children={({ field }) => (
                                         <>
-                                        {/* {console.log(isValid)}
-                                        {console.log(dirty)} */}
-                                        {console.log(errors)}
+                                        {console.log('isValid ', isValid)}
+                                        {/* {console.log('isInitialValid ', isInitialValid)} */}
+                                        {/* {console.log('dirty ',dirty)} */}
                                             <TextareaAutosize rowsMin={10}  {...field} label="Mensagem" />
                                             <label className="contador">{values.mensagem ?
                                                 values.mensagem.length + '/500'
@@ -204,7 +222,7 @@ export default function Cadastrar() {
                             </FormControl>
 
                             <ButtonContainer>
-                                <button type="submit" disabled={dirty && errors.length === 0}>Enviar</button>
+                                <button type="submit" disabled={!isValid}>Enviar</button>
                             </ButtonContainer>
                         </Form>
                     )}

@@ -75,7 +75,6 @@ export default function Dashboard() {
                     ? (
                         <div>
                             <MessageTitle>{selectedMessage.assunto}</MessageTitle>
-                            {/* <MessageSubject>Assunto da Mensagem</MessageSubject> */}
                             <MessageTime>{selectedMessage.data}</MessageTime>
                             <MessageContent>{selectedMessage.mensagem}</MessageContent>
                         </div>
@@ -87,7 +86,7 @@ export default function Dashboard() {
                     )}
                 </Message>
                 <ButtonContainer>
-                    <button onClick={handleDelete}>EXCLUIR MENSAGEM</button>
+                    {selectedMessage && <button onClick={handleDelete}>EXCLUIR MENSAGEM</button>}
                 </ButtonContainer>
             </MainContainer>
         </div>

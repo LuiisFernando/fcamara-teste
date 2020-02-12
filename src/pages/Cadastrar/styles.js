@@ -44,6 +44,9 @@ export const Container = styled.div`
 
   .MuiFormControl-root {
       height: 84px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
   }
 
   .contador {
