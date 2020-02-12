@@ -14,7 +14,7 @@ or npm
 npm install
 ```
 
-2- run the server with json server.
+2- run the server with json-server.
 
 if you're using yarn just type the code below
 
