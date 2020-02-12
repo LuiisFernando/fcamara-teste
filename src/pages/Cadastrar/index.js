@@ -111,7 +111,7 @@ export default function Cadastrar() {
                     validationSchema={schema}
                     onSubmit={handleSubmit}
                 >
-                    {({ values, isValid, dirty, errors, isInitialValid }) => (
+                    {({ values, isValid }) => (
                         <Form>
                             <FormControl>
                                 <Field
@@ -203,13 +203,10 @@ export default function Cadastrar() {
                                     name="mensagem"
                                     children={({ field }) => (
                                         <>
-                                        {console.log('isValid ', isValid)}
-                                        {/* {console.log('isInitialValid ', isInitialValid)} */}
-                                        {/* {console.log('dirty ',dirty)} */}
                                             <TextareaAutosize rowsMin={10}  {...field} label="Mensagem" />
                                             <label className="contador">{values.mensagem ?
                                                 values.mensagem.length + '/500'
-                                                : '0/200'
+                                                : '0/500'
                                             }</label>
                                         </>
                                     )}
