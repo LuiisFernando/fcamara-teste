@@ -22,7 +22,7 @@ if you're using yarn just type the code below
 yarn json-server server.json -w -p 3333
 ```
 
-if you're using npm you have to install json-server globaly with the code below
+if you're using npm you have to install json-server globally with the code below
 
 ```
 npm install -g json-server
