@@ -1,6 +1,6 @@
 # fcamara-teste
 
-To run follow the steps bellow.
+To run follow the steps below.
 
 1- install the dependencies
 
